@@ -125,6 +125,11 @@ jobs:
         git push github --tags
 ```
 
+# Step 4: Run the Workflow
+- Go to the **Actions** tab in your GitHub repository.
+- Click **Migrate from Bitbucket to GitHub** in the list of workflows.
+- Click **Run workflow** (on the right side of the page).
+- The workflow will start. You can monitor its progress in the logs.
 
 
 
