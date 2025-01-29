@@ -78,4 +78,54 @@ Now, store the sensitive data securely in your GitHub repository as secrets.
   - **Name**: GITHUB_TOKEN
     **Value**: Your GitHub Personal Access Token.
 
+# Step 3: Create the GitHub Actions Workflow
+GitHub Actions is an automation tool that runs scripts. In this step, you will create a file in your GitHub repository to automate the migration process.
+
+**3.1: Create the Workflow File**
+
+- Go to your GitHub repository’s **Code** tab.
+
+- Click **Add file** > **Create new file**.
+
+- Name the file:
+
+```bash
+.github/workflows/migrate.yml
+```
+- Copy and paste this code into the file:
+
+```yml
+name: Migrate Bitbucket to GitHub
+
+on:
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Clone Bitbucket repository
+      run: |
+        echo "Cloning Bitbucket repository..."
+        git clone https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${{ secrets.BITBUCKET_USERNAME }}/${{ secrets.BITBUCKET_REPO_NAME }}.git bitbucket-repo
+      env:
+        BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+        BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
+
+    - name: Push to GitHub repository
+      run: |
+        echo "Pushing to GitHub repository..."
+        cd bitbucket-repo
+        git remote add github https://github.com/${{ secrets.GITHUB_USERNAME }}/${{ secrets.GITHUB_REPO_NAME }}.git
+        git push github --all
+        git push github --tags
+```
+
+
+
+
 
