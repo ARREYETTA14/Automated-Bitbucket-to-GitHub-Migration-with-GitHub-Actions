@@ -120,9 +120,12 @@ jobs:
       run: |
         echo "Pushing to GitHub repository..."
         cd bitbucket-repo
-        git remote add github https://github.com/${{ secrets.GITHUB_USERNAME }}/${{ secrets.GITHUB_REPO_NAME }}.git
+        git remote add github https://${{ secrets.GITHB_TOKEN }}@github.com/${{ secrets.GITHB_USERNAME }}/${{ secrets.GITHB_REPO_NAME }}.git
         git push github --all
         git push github --tags
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
+
 ```
 
 # Step 4: Run the Workflow
@@ -131,6 +134,10 @@ jobs:
 - Click **Run workflow** (on the right side of the page).
 - The workflow will start. You can monitor its progress in the logs.
 
+# Step 5: Verify the Migration
+- Go to your GitHub repository’s Code tab.
+  - Verify that all files, branches, and tags from Bitbucket are present.
+- If something is missing, check the logs in the Actions tab for errors.
 
 
 
