@@ -1,0 +1,31 @@
+name: Migrate Bitbucket to GitHub
+
+on:
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Clone Bitbucket repository
+      run: |
+        echo "Cloning Bitbucket repository..."
+        git clone https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${{ secrets.BITBUCKET_USERNAME }}/${{ secrets.BITBUCKET_REPO_NAME }}.git bitbucket-repo
+      env:
+        BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+        BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
+
+    - name: Push to GitHub repository
+      run: |
+        echo "Pushing to GitHub repository..."
+        cd bitbucket-repo
+        git remote add github https://${{ secrets.GITHB_TOKEN }}@github.com/${{ secrets.GITHB_USERNAME }}/${{ secrets.GITHB_REPO_NAME }}.git
+        git push github --all
+        git push github --tags
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
+        
