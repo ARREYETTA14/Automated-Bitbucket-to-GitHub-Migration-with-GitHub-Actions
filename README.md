@@ -1,0 +1,2 @@
+# Automated-Bitbucket-to-GitHub-Migration-with-GitHub-Actions
+Managing repositories across different version control platforms can be time-consuming, especially when transitioning from Bitbucket to GitHub. This project provides a fully automated solution using GitHub Actions to seamlessly clone a Bitbucket repository and push it to GitHub while preserving the entire commit history, branches, and tags
