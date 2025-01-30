@@ -8,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
     - name: Clone Bitbucket repository
       run: |
         echo "Cloning Bitbucket repository..."
@@ -23,9 +20,10 @@ jobs:
       run: |
         echo "Pushing to GitHub repository..."
         cd bitbucket-repo
+        git remote remove github || true  # Remove existing remote if it exists
         git remote add github https://${{ secrets.GITHB_TOKEN }}@github.com/${{ secrets.GITHB_USERNAME }}/${{ secrets.GITHB_REPO_NAME }}.git
         git push github --all
         git push github --tags
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
+        GITHB_TOKEN: ${{ secrets.GITHB_TOKEN }}
         
