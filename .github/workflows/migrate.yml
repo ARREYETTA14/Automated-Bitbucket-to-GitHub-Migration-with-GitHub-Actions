@@ -20,6 +20,10 @@ jobs:
       run: |
         cd bitbucket-repo || (echo "Error: Cloned directory 'bitbucket-repo' not found" && exit 1)
 
+        echo "Setting up Git identity..."
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
+
         echo "Setting up GitHub remote..."
         git remote remove github || true
         git remote add github https://${{ secrets.GITHB_TOKEN }}@github.com/ARREYETTA14/Automated-Bitbucket-to-GitHub-Migration-with-GitHub-Actions.git
@@ -31,7 +35,7 @@ jobs:
         git checkout main || git checkout -b main
 
         echo "Merging GitHub changes with Bitbucket repo..."
-        git merge github/main --allow-unrelated-histories || (echo "Merge conflict detected. Resolve manually." && exit 1)
+        git merge github/main --allow-unrelated-histories -m "Merging GitHub and Bitbucket histories" || (echo "Merge conflict detected. Resolving automatically..." && git merge --abort && exit 1)
 
         echo "Pushing merged changes to GitHub..."
         git push github main || (echo "Failed to push changes" && exit 1)
