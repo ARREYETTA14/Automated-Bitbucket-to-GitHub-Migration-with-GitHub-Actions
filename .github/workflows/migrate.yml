@@ -15,7 +15,7 @@ jobs:
         echo "BITBUCKET_REPO_NAME=${{ secrets.BITBUCKET_REPO_NAME }}"
         
         echo "Cloning Bitbucket repository..."
-        git clone https://${{ secrets.BITBUCKET_USERNAME }}:${{ secrets.BITBUCKET_APP_PASSWORD }}@bitbucket.org/${{ secrets.BITBUCKET_USERNAME }}/${{ secrets.BITBUCKET_REPO_NAME }}.git bitbucket-repo || (echo "Failed to clone Bitbucket repository" && exit 1)
+        git clone https://arreyettaaugustine@bitbucket.org/bitbucket-migration-github/migration-repo.git
       env:
         BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
         BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
