@@ -129,6 +129,10 @@ jobs:
 
 ```
 
+**Note** 
+- This code seems to be a little complex because the repo I was cloning had some data already so I had to add some lines to avoid issues with the repository not being merged or avoid ```forcefully``` pushing the data to the repo which will warrant cleaning all data in the present repo. In case your Repo is empty, this code will still work or you will not need a code as complex as mine. Something less complex will do the job.
+- Lines ```14``` and ```29``` should be substituted with the actual ```Bitbucket repository URL``` and the ```Github repository URL``` respectively. For line ```29```. Make sure to substitute at the appropriate section
+
 # Step 4: Run the Workflow
 - Go to the **Actions** tab in your GitHub repository.
 - Click **Migrate from Bitbucket to GitHub** in the list of workflows.
@@ -139,6 +143,9 @@ jobs:
 - Go to your GitHub repository’s Code tab.
   - Verify that all files, branches, and tags from Bitbucket are present.
 - If something is missing, check the logs in the Actions tab for errors.
+
+
+
 
 
 
