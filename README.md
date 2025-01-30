@@ -70,8 +70,6 @@ Now, store the sensitive data securely in your GitHub repository as secrets.
 
 - Click **Settings > Secrets and variables > Actions**.
 
-
-
 - Click **New repository secret** and add the following:
 
   - **Name**: BITBUCKET_USERNAME
