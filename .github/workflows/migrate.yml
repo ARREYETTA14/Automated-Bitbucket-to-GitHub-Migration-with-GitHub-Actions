@@ -28,7 +28,7 @@ jobs:
         git remote -v  # Show existing remotes
         
         git remote remove github || true  # Remove existing remote if it exists
-        git remote add github https://${{ secrets.GITHB_TOKEN }}@github.com/${{ secrets.GITHB_USERNAME }}/${{ secrets.GITHB_REPO_NAME }}.git
+        git remote add github https://github.com/ARREYETTA14/Automated-Bitbucket-to-GitHub-Migration-with-GitHub-Actions.git
         
         echo "Git remotes after adding GitHub:"
         git remote -v  # Verify remotes
