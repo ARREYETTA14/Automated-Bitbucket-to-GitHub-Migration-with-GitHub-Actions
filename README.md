@@ -14,6 +14,7 @@ Managing repositories across different version control platforms can be time-con
 **1.2: Generate a Bitbucket App Password**
 - While still at the setting section of bitbucket, On the left sidebar, scroll down to **Access management** and click **App passwords**.
 <image>
+
 - Click **Create app password**:
   - Give it a label (e.g., ```GitHubMigration```).
   - Select these permissions:
