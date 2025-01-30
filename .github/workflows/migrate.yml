@@ -10,20 +10,33 @@ jobs:
     steps:
     - name: Clone Bitbucket repository
       run: |
+        echo "Checking Bitbucket credentials..."
+        echo "BITBUCKET_USERNAME=${{ secrets.BITBUCKET_USERNAME }}"
+        echo "BITBUCKET_REPO_NAME=${{ secrets.BITBUCKET_REPO_NAME }}"
+        
         echo "Cloning Bitbucket repository..."
-        git clone https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${{ secrets.BITBUCKET_USERNAME }}/${{ secrets.BITBUCKET_REPO_NAME }}.git bitbucket-repo
+        git clone https://${{ secrets.BITBUCKET_USERNAME }}:${{ secrets.BITBUCKET_APP_PASSWORD }}@bitbucket.org/${{ secrets.BITBUCKET_USERNAME }}/${{ secrets.BITBUCKET_REPO_NAME }}.git bitbucket-repo || (echo "Failed to clone Bitbucket repository" && exit 1)
       env:
         BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
         BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
 
     - name: Push to GitHub repository
       run: |
-        echo "Pushing to GitHub repository..."
         cd bitbucket-repo
+        echo "Setting up GitHub remote..."
+        
+        git remote -v  # Show existing remotes
+        
         git remote remove github || true  # Remove existing remote if it exists
         git remote add github https://${{ secrets.GITHB_TOKEN }}@github.com/${{ secrets.GITHB_USERNAME }}/${{ secrets.GITHB_REPO_NAME }}.git
-        git push github --all
-        git push github --tags
+        
+        echo "Git remotes after adding GitHub:"
+        git remote -v  # Verify remotes
+        
+        echo "Pushing all branches to GitHub..."
+        git push github --all || (echo "Failed to push branches" && exit 1)
+
+        echo "Pushing all tags to GitHub..."
+        git push github --tags || (echo "Failed to push tags" && exit 1)
       env:
         GITHB_TOKEN: ${{ secrets.GITHB_TOKEN }}
-        
