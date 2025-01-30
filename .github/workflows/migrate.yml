@@ -22,7 +22,7 @@ jobs:
 
     - name: Push to GitHub repository
       run: |
-        cd bitbucket-repo
+       
         echo "Setting up GitHub remote..."
         
         git remote -v  # Show existing remotes
