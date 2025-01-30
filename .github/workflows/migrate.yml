@@ -1,0 +1,49 @@
+name: Migrate Bitbucket to GitHub
+
+on:
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Bitbucket Repository
+      run: |
+        echo "Cloning Bitbucket repository..."
+        git clone https://arreyettaaugustine@bitbucket.org/bitbucket-migration-github/migration-repo.git bitbucket-repo
+      env:
+        BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+        BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
+
+    - name: Push to GitHub Repository (Merge Approach)
+      run: |
+        cd bitbucket-repo || (echo "Error: Cloned directory 'bitbucket-repo' not found" && exit 1)
+
+        echo "Setting up Git identity..."
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
+
+        echo "Setting up GitHub remote..."
+        git remote remove github || true
+        git remote add github https://${{ secrets.GITHB_TOKEN }}@github.com/ARREYETTA14/Automated-Bitbucket-to-GitHub-Migration-with-GitHub-Actions.git
+
+        echo "Fetching latest changes from GitHub..."
+        git fetch github
+
+        echo "Checking out the main branch..."
+        git checkout main || git checkout -b main
+
+        echo "Merging GitHub changes with Bitbucket repo..."
+        git merge github/main --allow-unrelated-histories -m "Merging GitHub and Bitbucket histories" || (echo "Merge conflict detected. Resolving automatically..." && git merge --abort && exit 1)
+
+        echo "Pushing merged changes to GitHub..."
+        git push github main || (echo "Failed to push changes" && exit 1)
+
+        echo "Pushing all branches to GitHub..."
+        git push github --all || (echo "Failed to push branches" && exit 1)
+
+        echo "Pushing all tags to GitHub..."
+        git push github --tags || (echo "Failed to push tags" && exit 1)
+      env:
+        GITHB_TOKEN: ${{ secrets.GITHB_TOKEN }}
