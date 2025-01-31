@@ -3,6 +3,10 @@ Managing repositories across different version control platforms can be time-con
 
 # 1. Prepare Your Bitbucket Repository
 
+**Content of Bitbucket Repository**
+
+![Image](https://github.com/user-attachments/assets/908ba8ca-0ec4-45e5-a251-984bd9743f3d)
+
 **1.1: Find Your Bitbucket Username**
 - Login to your Bitbucket account, go to the repo you wish to  migrate
 - Copy the **repo name**
