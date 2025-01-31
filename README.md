@@ -166,6 +166,9 @@ jobs:
 - Click **Migrate from Bitbucket to GitHub** in the list of workflows.
 - Click **Run workflow** (on the right side of the page).
 - The workflow will start. You can monitor its progress in the logs.
+- A successful run will show as thus:
+
+![Image](https://github.com/user-attachments/assets/4ea47482-cbf0-4de5-9600-7842cb3af700)
 
 # Step 5: Verify the Migration
 - Go to your GitHub repository’s Code tab.
